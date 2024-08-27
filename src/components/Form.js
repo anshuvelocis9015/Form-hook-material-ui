@@ -18,10 +18,11 @@ const Form = () => {
   const { register, handleSubmit, reset, control, setValue, formState: { errors } } = useForm();
   const onFormSubmit = (data) => {
     console.log(data);
+    localStorage.setItem("data",JSON.stringify(data));
     reset();
   };
+  localStorage.getItem("data");
   const handleChange = (e)=>{
-    // console.log(e.target.value);
     const upperCaseValued = e.target.value.toUpperCase();
     setValue("panNumber",upperCaseValued);
   }
