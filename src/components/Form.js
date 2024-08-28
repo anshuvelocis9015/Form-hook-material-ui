@@ -1,5 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
 import * as React from 'react';
+import { useDispatch } from "react-redux";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,15 +14,19 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { saveFormData } from "../store/formSlice";
 
 const Form = () => {
   const { register, handleSubmit, reset, control, setValue, formState: { errors } } = useForm();
+  const dispatch = useDispatch();
   const onFormSubmit = (data) => {
     console.log(data);
+    dispatch(saveFormData(data));
     localStorage.setItem("data",JSON.stringify(data));
     reset();
   };
   localStorage.getItem("data");
+
   const handleChange = (e)=>{
     const upperCaseValued = e.target.value.toUpperCase();
     setValue("panNumber",upperCaseValued);
