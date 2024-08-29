@@ -22,10 +22,10 @@ const Form = () => {
   const onFormSubmit = (data) => {
     console.log(data);
     dispatch(saveFormData(data));
-    localStorage.setItem("data",JSON.stringify(data));
+   
     reset();
   };
-  localStorage.getItem("data");
+
 
   const handleChange = (e)=>{
     const upperCaseValued = e.target.value.toUpperCase();

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    // formData:JSON.parse(localStorage.getItem("formDataaaa")),
     formData:{},
 }
 
@@ -9,7 +10,8 @@ const formSlice = createSlice({
     initialState,
     reducers:{
         saveFormData: (state,action)=>{
-            state.formData = action.payload
+            state.formData = action.payload;
+            // localStorage.setItem("formDataaaa",JSON.stringify(state.formData))
         }
     }
 })
