@@ -18,7 +18,7 @@ import { saveFormData } from "../store/formSlice";
 
 const Form = () => {
   const { register, handleSubmit, reset, control, setValue, formState: { errors } } = useForm();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const onFormSubmit = (data) => {
     console.log(data);
     dispatch(saveFormData(data));
