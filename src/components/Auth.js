@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 
@@ -33,33 +33,34 @@ import { useForm } from 'react-hook-form';
 //     )
 // }
 const Auth = () => {
-    const {register,handleSubmit,formState:{errors}} = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [showOtpInput,setShowOtpInput] = useState();
     const inputRef = useRef();
-    const onSubmit = (data) =>{
+    const onSubmit = (data) => {
         inputRef.current.focus();
         console.log(data);
     }
     // const onFormError = (error) => console.log(error);
-    return(
+    return (
         <div>
-        <h1>Auth</h1>
-        <form onSubmit={handleSubmit(onSubmit)} ref={inputRef}>
-        <input 
-        type='tel' 
-        placeholder='+911234567890'
-        {...register('phoneNumber',{
-            pattern:{
-            value:/[a-zA-z]{3}/,
-            message:"invalid phone number",
-            },
-             required:"phone number is required"
-        }
-        
-    )}
-        />
-        {errors?.phoneNumber&&<span>{errors.phoneNumber.message}</span>}
-        <button type='submit'>Send OTP</button>
-        </form>
+            <h1>Auth</h1>
+            <form onSubmit={handleSubmit(onSubmit)} ref={inputRef}>
+                <input
+                    type='tel'
+                    placeholder='+911234567890'
+                    {...register('phoneNumber', {
+                        pattern: {
+                            value: /^[6-9]\d{9}$/,
+                            message: "invalid phone number",
+                        },
+                        required: "phone number is required"
+                    }
+
+                    )}
+                />
+                {errors?.phoneNumber && <span>{errors.phoneNumber.message}</span>}
+                <button type='submit'>Send OTP</button>
+            </form>
         </div>
     )
 }
