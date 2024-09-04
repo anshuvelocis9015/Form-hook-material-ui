@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 // import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -34,14 +34,16 @@ import { useForm } from 'react-hook-form';
 // }
 const Auth = () => {
     const {register,handleSubmit,formState:{errors}} = useForm();
+    const inputRef = useRef();
     const onSubmit = (data) =>{
+        inputRef.current.focus();
         console.log(data);
     }
     // const onFormError = (error) => console.log(error);
     return(
         <div>
         <h1>Auth</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} ref={inputRef}>
         <input 
         type='tel' 
         placeholder='+911234567890'
