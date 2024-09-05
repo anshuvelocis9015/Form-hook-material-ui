@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import OtpInput from './otpInput';
 
 
 // const Auth = () => {
@@ -34,33 +35,45 @@ import { useForm } from 'react-hook-form';
 // }
 const Auth = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [showOtpInput,setShowOtpInput] = useState();
+    const [showOtpInput, setShowOtpInput] = useState(false);
+    const[submittedPhoneNumber,setSubmittedPhoneNumber] = useState("");
     const inputRef = useRef();
     const onSubmit = (data) => {
         inputRef.current.focus();
+        setSubmittedPhoneNumber(data.phoneNumber);
+        //call api
+        setShowOtpInput(true);
         console.log(data);
     }
-    // const onFormError = (error) => console.log(error);
+    const onOtpSubmit = (otp) => {
+        console.log("Login Successfully",otp);
+    }
+   
+    
     return (
         <div>
-            <h1>Auth</h1>
-            <form onSubmit={handleSubmit(onSubmit)} ref={inputRef}>
-                <input
-                    type='tel'
-                    placeholder='+911234567890'
-                    {...register('phoneNumber', {
-                        pattern: {
-                            value: /^[6-9]\d{9}$/,
-                            message: "invalid phone number",
-                        },
-                        required: "phone number is required"
-                    }
+            {!showOtpInput ?
+                (<form onSubmit={handleSubmit(onSubmit)} ref={inputRef}>
+                    <input
+                        type='tel'
+                        placeholder='+911234567890'
+                        {...register('phoneNumber', {
+                            pattern: {
+                                value: /^[6-9]\d{9}$/,
+                                message: "invalid phone number",
+                            },
+                            required: "phone number is required"
+                        }
 
-                    )}
-                />
-                {errors?.phoneNumber && <span>{errors.phoneNumber.message}</span>}
-                <button type='submit'>Send OTP</button>
-            </form>
+                        )}
+                    />
+                    {errors?.phoneNumber && <span>{errors.phoneNumber.message}</span>}
+                    <button type='submit'>Send OTP</button>
+                </form>) :
+                (<div>
+                    <p>Enter OTP sent to {submittedPhoneNumber}</p>
+                    <OtpInput length={4} onOtpSubmit={onOtpSubmit}/>
+                </div>)}
         </div>
     )
 }
